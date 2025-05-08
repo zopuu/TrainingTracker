@@ -1,11 +1,22 @@
+using Backend.Data;
+using Backend.Repositories;
+using Backend.Services;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<AppDbContext>(opt =>
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddScoped<ITrainingRecordRepository, TrainingRecordRepository>();
+builder.Services.AddScoped<ITrainingRecordService, TrainingRecordService>();
 
 var app = builder.Build();
 

@@ -1,0 +1,40 @@
+.container{
+    display: flex;
+    height: calc(100vh - 50px);
+    margin: 0;
+    justify-content: center;
+}
+.side-panel {
+    flex: 1;
+    min-width: 100px;
+    max-width: 250px;
+    background-color:darkgrey 
+}
+.main-panel {
+    flex: 2;
+    padding: 1rem;
+    min-width: 300px;
+    max-width: 900px;
+    overflow-y: auto;
+    background-color:aqua;
+}
+html,body{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+}
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .side-panel {
+        display: none;
+    }
+    .main-panel {
+        flex: none;
+        width: 100%;
+        max-width: none;
+    }
+}

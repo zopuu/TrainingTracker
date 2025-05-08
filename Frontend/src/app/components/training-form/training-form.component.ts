@@ -1,86 +1,70 @@
-import { Component } from '@angular/core';
+import { Component,OnDestroy,ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject,takeUntil } from 'rxjs';
+import { TrainingType,ACTIVITY_MAP,ActivityOption } from 'src/app/models/activity-data';
 
-
-
-type TrainingType = 'cardio' | 'strength' | 'flexibility' | 'recovery' | 'other';
 
 @Component({
   selector: 'app-training-form',
   templateUrl: './training-form.component.html',
-  styleUrls: ['./training-form.component.css']
+  styleUrls: ['./training-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TrainingFormComponent {
-  form: FormGroup;
-  trainingTypes: TrainingType[] = [
-    'cardio',
-    'strength',
-    'flexibility',
-    'recovery',
-    'other',
-  ];
+export class TrainingFormComponent implements OnDestroy {
+  form: FormGroup = this.fb.nonNullable.group({
+    datetime: ['', Validators.required],
+    trainingType: [TrainingType.Cardio, Validators.required],
+    activity: ['', Validators.required],
+    details: this.fb.group({
+      duration: [null, Validators.min(1)],
+      difficulty: [null, [Validators.min(1), Validators.max(10)]],
+      fatigue: [null, [Validators.min(1), Validators.max(10)]],
+      calories: [null, Validators.min(1)]
+    }),
+
+    notes: ['']
+  });
+  
+  readonly trainingTypes = Object.values(TrainingType);
+  activities: ActivityOption[] = ACTIVITY_MAP[TrainingType.Cardio];
   detailsVisible = false;
 
-  
-  activityMap: Record<TrainingType,string[]> = {
-    cardio: ['running', 'cycling', 'swimming'],
-    strength: ['weightlifting', 'bodyweight', 'resistance bands'],
-    flexibility: ['yoga', 'stretching', 'pilates'],
-    recovery: ['foam rolling', 'active recovery', 'passive recovery'],
-    other: ['other']
-  };
-  selectedActivities: string[] = [];
-  selectedTrainingType: TrainingType | '' = '';
+  /** teardown */
+  private destroy$ = new Subject<void>();
 
   constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      trainingType: ['', Validators.required],
-      activity: ['', Validators.required],
-      datetime: ['', Validators.required],
-      duration: ['', [Validators.required, Validators.min(1)]],
-      difficulty: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
-      fatigue: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
-      calories: ['', [Validators.required, Validators.min(1)]],
-      notes: ['']
-    });
+    /* react to Training Type changes */
+    this.form
+      .get('trainingType')!
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((type: TrainingType) => {
+        this.activities = ACTIVITY_MAP[type];
+        this.form.get('activity')!.reset();
+        this.setDetailsVisible(false);
+      });
 
-    this.toggleDetailValidators(false);
+    /* react to Activity selection */
+    this.form
+      .get('activity')!
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((val) => this.setDetailsVisible(!!val));
   }
-  onTrainingTypeChange(type: TrainingType) {
-    this.selectedActivities = this.activityMap[type] || [];
-    this.selectedTrainingType = type;
-    this.detailsVisible = false;
-    this.form.get('activity')!.reset();
-    this.toggleDetailValidators(false);
+  private setDetailsVisible(show: boolean): void {
+    this.detailsVisible = show;
+    const detailsGroup = this.form.get('details')!;
+    show ? detailsGroup.enable() : detailsGroup.disable();
   }
-  onActivityChange(activity: string) {
-    if (this.form.get('activity')!.value) {
-      this.detailsVisible = true;
-      this.toggleDetailValidators(true);
-    }
-  }
-  private toggleDetailValidators(enable: boolean): void {
-    ['duration', 'difficulty', 'fatigue'].forEach(ctrlName => {
-      const ctrl = this.form.get(ctrlName);
-      if (!ctrl) { return; }         
-      if (enable) {
-        ctrl.addValidators(Validators.required);
-      } else {
-        ctrl.clearValidators();
-      }
-      ctrl.updateValueAndValidity();
-    });
-  }
-  
-  onSubmit() {
+
+  onSubmit(): void {
     if (this.form.valid) {
-      const formData = this.form.value;
-      console.log('Form submitted:', formData);
-      // TODO
-
-    } else {
-      console.log('Form is invalid');
+      console.log('Training data ➜', this.form.value);
+      // TODO: call TrainingService.save(this.form.value)
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

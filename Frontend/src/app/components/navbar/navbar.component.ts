@@ -15,6 +15,8 @@ export class NavbarComponent {
   openTrainingForm() {
     this.dialog.open(TrainingFormComponent, {
       width: '400px',
+      maxHeight: '90vh',
+      panelClass: 'training-form-dialog',
       data: { name: 'Training Form' }
     });
 }

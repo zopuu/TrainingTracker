@@ -16,7 +16,7 @@ export interface TrainingRecord {
 
 @Injectable({ providedIn: 'root' })
 export class TrainingService {
-  private readonly api = 'https://localhost:7174/api/TrainingRecord';
+  private readonly api = 'https://localhost:5092/api/TrainingRecord';
 
   constructor(private http: HttpClient) {}
 

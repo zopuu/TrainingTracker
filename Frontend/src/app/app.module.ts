@@ -16,13 +16,19 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TrainingFormComponent } from './components/training-form/training-form.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { MainComponent } from './components/main/main.component';
+import { RegistrationComponent } from './components/auth/registration/registration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     CalendarComponent,
-    TrainingFormComponent
+    TrainingFormComponent,
+    LoginComponent,
+    MainComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

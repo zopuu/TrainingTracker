@@ -1,9 +1,9 @@
 export enum TrainingType {
-    Cardio = 'cardio',
-    Strength = 'strength',
-    Flexibility = 'flexibility',
-    Recovery = 'recovery',
-    Other = 'other'
+    Cardio = 'Cardio',
+    Strength = 'Strength',
+    Flexibility = 'Flexibility',
+    Recovery = 'Recovery',
+    Other = 'Other'
   }
   
   export interface ActivityOption {

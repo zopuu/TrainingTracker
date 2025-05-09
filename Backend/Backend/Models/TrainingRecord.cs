@@ -27,7 +27,7 @@ namespace Backend.Models;
         public TrainingRecord(DateTime trainingDateTime, TrainingType trainingType, string activity, int duration,
             int difficulty, int fatigue, int calories, string? notes)
         {
-            TrainingDateTime=trainingDateTime;
+            TrainingDateTime=DateTime.SpecifyKind(trainingDateTime,DateTimeKind.Utc);
             TrainingType=trainingType;
             Activity=activity;
             Duration=duration;

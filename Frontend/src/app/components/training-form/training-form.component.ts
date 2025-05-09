@@ -2,7 +2,8 @@ import { Component,OnDestroy,ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject,takeUntil } from 'rxjs';
 import { TrainingType,ACTIVITY_MAP,ActivityOption } from 'src/app/models/activity-data';
-
+import { TrainingService } from 'src/app/services/training.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-training-form',
@@ -12,7 +13,7 @@ import { TrainingType,ACTIVITY_MAP,ActivityOption } from 'src/app/models/activit
 })
 export class TrainingFormComponent implements OnDestroy {
   form: FormGroup = this.fb.nonNullable.group({
-    datetime: ['', Validators.required],
+    trainingDateTime: ['', Validators.required],
     trainingType: [TrainingType.Cardio, Validators.required],
     activity: ['', Validators.required],
     details: this.fb.group({
@@ -29,11 +30,9 @@ export class TrainingFormComponent implements OnDestroy {
   activities: ActivityOption[] = ACTIVITY_MAP[TrainingType.Cardio];
   detailsVisible = false;
 
-  /** teardown */
   private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder) {
-    /* react to Training Type changes */
+  constructor(private fb: FormBuilder, private service: TrainingService, private dialogRef: MatDialogRef<TrainingFormComponent>) {
     this.form
       .get('trainingType')!
       .valueChanges.pipe(takeUntil(this.destroy$))
@@ -43,7 +42,6 @@ export class TrainingFormComponent implements OnDestroy {
         this.setDetailsVisible(false);
       });
 
-    /* react to Activity selection */
     this.form
       .get('activity')!
       .valueChanges.pipe(takeUntil(this.destroy$))
@@ -56,11 +54,23 @@ export class TrainingFormComponent implements OnDestroy {
   }
 
   onSubmit(): void {
-    if (this.form.valid) {
-      console.log('Training data ➜', this.form.value);
-      // TODO: call TrainingService.save(this.form.value)
-    }
+    if (!this.form.valid) return;
+  
+    const record = {
+      ...this.form.value,
+      ...this.form.value.details
+    };
+    delete record.details;
+
+    const local = this.form.value.trainingDateTime;       
+    record.trainingDateTime = new Date(local).toISOString();
+  
+    this.service.create(record).subscribe({
+      next: () => this.dialogRef.close(true),
+      error: err => console.error(err)
+    });
   }
+  
 
   ngOnDestroy(): void {
     this.destroy$.next();

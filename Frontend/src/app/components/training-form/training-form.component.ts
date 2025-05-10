@@ -1,9 +1,10 @@
 import { Component,OnDestroy,ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Subject,takeUntil } from 'rxjs';
 import { TrainingType,ACTIVITY_MAP,ActivityOption } from 'src/app/models/activity-data';
 import { TrainingService } from 'src/app/services/training.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-training-form',
@@ -13,8 +14,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class TrainingFormComponent implements OnDestroy {
   form: FormGroup = this.fb.nonNullable.group({
-    trainingDateTime: ['', Validators.required],
-    trainingType: [TrainingType.Cardio, Validators.required],
+    trainingDateTime: ['', [Validators.required, this.noFutureDateValidator]],
+    trainingType: ['', Validators.required],
     activity: ['', Validators.required],
     details: this.fb.group({
       duration: [null, Validators.min(1)],
@@ -52,6 +53,12 @@ export class TrainingFormComponent implements OnDestroy {
     const detailsGroup = this.form.get('details')!;
     show ? detailsGroup.enable() : detailsGroup.disable();
   }
+  noFutureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const inputDate = new Date(control.value);
+    const now = new Date();
+
+    return inputDate > now ? { futureDate: true } : null;
+  }
 
   onSubmit(): void {
     if (!this.form.valid) return;
@@ -66,8 +73,26 @@ export class TrainingFormComponent implements OnDestroy {
     record.trainingDateTime = new Date(local).toISOString();
   
     this.service.create(record).subscribe({
-      next: () => this.dialogRef.close(true),
-      error: err => console.error(err)
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Training record created successfully',
+          confirmButtonText: 'Ok',
+          timer: 3500
+        }).then(() => {
+          this.dialogRef.close(true);
+        });
+      },
+      error: err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error creating training record',
+          text: 'Check your input and try again',
+          confirmButtonText: 'Ok'
+        });
+         // Log the error to the console
+        console.error(err)
+      }
     });
   }
   

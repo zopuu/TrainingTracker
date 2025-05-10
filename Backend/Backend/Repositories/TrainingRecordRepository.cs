@@ -32,4 +32,11 @@ public class TrainingRecordRepository : ITrainingRecordRepository {
         _db.TrainingRecords.Remove(entity);
         await _db.SaveChangesAsync();
     }
+
+    public async Task<List<TrainingRecord>> GetAllForUserAsync(int userId)
+    {
+        return await _db.TrainingRecords
+            .Where(tr => tr.UserId == userId)
+            .ToListAsync();
+    }
 }

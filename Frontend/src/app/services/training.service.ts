@@ -16,15 +16,15 @@ export interface TrainingRecord {
 
 @Injectable({ providedIn: 'root' })
 export class TrainingService {
-  private readonly api = 'https://localhost:5092/api/TrainingRecord';
+  private readonly api = 'http://localhost:5092/api/TrainingRecord';
 
   constructor(private http: HttpClient) {}
 
   create(record: TrainingRecord): Observable<TrainingRecord> {
-    return this.http.post<TrainingRecord>(this.api, record);
+    return this.http.post<TrainingRecord>(this.api, record, {withCredentials: true});
   }
 
   getAll(): Observable<TrainingRecord[]> {
-    return this.http.get<TrainingRecord[]>(this.api);
+    return this.http.get<TrainingRecord[]>(this.api, {withCredentials: true});
   }
 }

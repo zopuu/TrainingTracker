@@ -22,4 +22,7 @@ public class TrainingRecordService : ITrainingRecordService {
         await _repo.DeleteAsync(id);
         return true;
     }
+    public async Task<List<TrainingRecord>> GetAllForUserAsync(int userId) {
+        return await _repo.GetAllForUserAsync(userId);
+    }
 }

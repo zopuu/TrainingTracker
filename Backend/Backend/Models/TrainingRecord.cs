@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices.JavaScript;
+using System.Text.Json.Serialization;
 
 namespace Backend.Models;
     public enum TrainingType
@@ -13,9 +14,13 @@ namespace Backend.Models;
 
     public class TrainingRecord
     {
-        [Key]
-        public int Id { get; set; }
-        public DateTime TrainingDateTime { get; set; }
+        [Key] public int Id { get; set; }
+        public int UserId { get; set; }
+
+        [JsonIgnore]
+        public User? User { get; set; }
+
+    public DateTime TrainingDateTime { get; set; }
         public TrainingType TrainingType { get; set; }
         public string Activity { get; set; } = string.Empty;
         public int Duration { get; set; }
@@ -24,9 +29,12 @@ namespace Backend.Models;
         public int Calories { get; set; }
         public string? Notes { get; set; }
 
-        public TrainingRecord(DateTime trainingDateTime, TrainingType trainingType, string activity, int duration,
+        public TrainingRecord() { }
+
+        public TrainingRecord(int userId,DateTime trainingDateTime, TrainingType trainingType, string activity, int duration,
             int difficulty, int fatigue, int calories, string? notes)
         {
+            UserId=userId;
             TrainingDateTime=DateTime.SpecifyKind(trainingDateTime,DateTimeKind.Utc);
             TrainingType=trainingType;
             Activity=activity;

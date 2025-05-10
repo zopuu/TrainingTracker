@@ -7,4 +7,5 @@ public interface ITrainingRecordService {
     Task<TrainingRecord> CreateAsync(TrainingRecord t);
     Task<bool> UpdateAsync(int id, TrainingRecord t);
     Task<bool> DeleteAsync(int id);
+    Task<List<TrainingRecord>> GetAllForUserAsync(int userId);
 }

@@ -14,7 +14,7 @@ public static class JwtHelper {
             audience: cfg["Jwt:Audience"],
             claims: new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim("username", user.Username),
                 new Claim("name", $"{user.Name} {user.Surname}")
             },

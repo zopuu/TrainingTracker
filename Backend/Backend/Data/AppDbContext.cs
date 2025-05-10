@@ -13,6 +13,11 @@ namespace Backend.Data {
             b.Entity<TrainingRecord>()
                 .Property(t => t.TrainingType)
                 .HasConversion<string>();
+            b.Entity<TrainingRecord>()
+                .HasOne(tr => tr.User)
+                .WithMany()
+                .HasForeignKey(tr => tr.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(b);
         }

@@ -8,5 +8,6 @@ namespace Backend.Repositories {
         Task<TrainingRecord> AddAsync(TrainingRecord t);
         Task<TrainingRecord> UpdateAsync(TrainingRecord t);
         Task DeleteAsync(int id);
+        Task<List<TrainingRecord>> GetAllForUserAsync(int userId);
     }
 }

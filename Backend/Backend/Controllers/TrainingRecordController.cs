@@ -1,5 +1,7 @@
-﻿using Backend.Models;
+﻿using System.Security.Claims;
+using Backend.Models;
 using Backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
@@ -17,6 +19,7 @@ public class TrainingRecordController : Controller
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetAll() =>
         Ok(await _service.GetAllAsync());
 
@@ -27,8 +30,12 @@ public class TrainingRecordController : Controller
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] TrainingRecord t)
     {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        t.UserId = userId;
+
         var created = await _service.CreateAsync(t);
         return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
     }

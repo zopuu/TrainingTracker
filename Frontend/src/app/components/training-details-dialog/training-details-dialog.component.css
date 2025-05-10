@@ -1,0 +1,21 @@
+.dialog-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;               
+  }
+  
+  .record {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .type {
+    font-size: 36px;
+    align-self: center;
+    margin-bottom: 4px;
+  }
+  
+  .row {
+    font-size: 14px;
+  }

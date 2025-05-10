@@ -1,4 +1,5 @@
-﻿using Backend.Models;
+﻿using System.ComponentModel;
+using Backend.Models;
 
 namespace Backend.Repositories {
     public interface ITrainingRecordRepository
@@ -9,5 +10,8 @@ namespace Backend.Repositories {
         Task<TrainingRecord> UpdateAsync(TrainingRecord t);
         Task DeleteAsync(int id);
         Task<List<TrainingRecord>> GetAllForUserAsync(int userId);
+
+        Task<List<TrainingRecord>> GetByMonthAsync(int userId, int year, int month);
+
     }
 }

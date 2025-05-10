@@ -25,4 +25,9 @@ public class TrainingRecordService : ITrainingRecordService {
     public async Task<List<TrainingRecord>> GetAllForUserAsync(int userId) {
         return await _repo.GetAllForUserAsync(userId);
     }
+
+    public async Task<List<TrainingRecord>> GetByMonthAsync(int userId, int year, int month)
+    {
+        return await _repo.GetByMonthAsync(userId,year, month);
+    }
 }

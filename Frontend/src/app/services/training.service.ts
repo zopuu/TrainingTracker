@@ -27,4 +27,7 @@ export class TrainingService {
   getAll(): Observable<TrainingRecord[]> {
     return this.http.get<TrainingRecord[]>(this.api, {withCredentials: true});
   }
+  getMonthTrainingRecords(year: number, month: number): Observable<TrainingRecord[]> {
+    return this.http.get<TrainingRecord[]>(`${this.api}/month?year=${year}&month=${month}`, {withCredentials: true});
+  }
 }

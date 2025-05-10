@@ -39,4 +39,13 @@ public class TrainingRecordRepository : ITrainingRecordRepository {
             .Where(tr => tr.UserId == userId)
             .ToListAsync();
     }
+
+    public async Task<List<TrainingRecord>> GetByMonthAsync(int userId, int year, int month)
+    {
+        return await _db.TrainingRecords
+            .Where(tr => tr.UserId == userId &&
+                         tr.TrainingDateTime.Year == year &&
+                         tr.TrainingDateTime.Month == month)
+            .ToListAsync();
+    }
 }

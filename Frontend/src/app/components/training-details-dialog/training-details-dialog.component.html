@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>
+    {{ data[0].trainingDateTime | date : 'fullDate' }}
+  </h2>
+  
+  <mat-dialog-content class="dialog-body">
+    <ng-container *ngFor="let rec of data; let last = last">
+  
+      <div class="record">
+        <mat-icon class="type {{ rec.trainingType.toLowerCase() }}">
+          {{ icon(rec.trainingType) }}
+        </mat-icon>
+  
+        <div class="row"><strong>Type:</strong> {{ rec.trainingType }}</div>
+        <div class="row"><strong>Activity:</strong> {{ rec.activity }}</div>
+        <div class="row"><strong>Duration:</strong> {{ rec.duration }} min</div>
+        <div class="row">
+          <strong>Difficulty:</strong> {{ rec.difficulty }}/10
+        </div>
+        <div class="row">
+          <strong>Fatigue:</strong> {{ rec.fatigue }}/10
+        </div>
+        <div class="row" *ngIf="rec.calories">
+          <strong>Calories:</strong> {{ rec.calories }}
+        </div>
+        <div class="row" *ngIf="rec.notes">
+          <strong>Notes:</strong> <i>{{ rec.notes }}</i>
+        </div>
+      </div>
+  
+      <mat-divider *ngIf="!last"></mat-divider>
+    </ng-container>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions>
+    <button mat-button (click)="close()">Close</button>
+  </mat-dialog-actions>
+  

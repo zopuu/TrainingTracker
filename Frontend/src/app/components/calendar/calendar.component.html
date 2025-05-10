@@ -1,1 +1,25 @@
-<p>calendar works!</p>
+<!-- custom cell template -->
+<ng-template #cellTemplate let-day="day">
+    <div class="cal-cell">
+      <span class="date-num">{{ day.date | date:'d' }}</span>
+  
+      <!-- show first event’s icon if present -->
+      <mat-icon *ngIf="day.events[0]" class="type {{ day.events[0].cssClass }}">
+        {{ iconName(day.events[0].meta.trainingType) }}
+      </mat-icon>
+    </div>
+  </ng-template>
+  
+  <div class="calendar-header">
+    <button mat-button (click)="prevMonth()">‹</button>
+    <span>{{ viewDate | date: 'MMMM yyyy' }}</span>
+    <button mat-button (click)="nextMonth()">›</button>
+  </div>
+  <!-- the month view -->
+  <mwl-calendar-month-view
+    [viewDate]="viewDate"
+    [events]="events"
+    [cellTemplate]="cellTemplate"
+    (dayClicked)="openDetails($event.day)">
+  </mwl-calendar-month-view>
+  

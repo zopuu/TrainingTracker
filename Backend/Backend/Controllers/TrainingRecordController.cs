@@ -8,6 +8,7 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class TrainingRecordController : Controller
 {
     private readonly ITrainingRecordService _service;
@@ -19,7 +20,6 @@ public class TrainingRecordController : Controller
     }
 
     [HttpGet]
-    [Authorize]
     public async Task<IActionResult> GetAll() =>
         Ok(await _service.GetAllAsync());
 
@@ -30,7 +30,6 @@ public class TrainingRecordController : Controller
     }
 
     [HttpPost]
-    [Authorize]
     public async Task<IActionResult> Create([FromBody] TrainingRecord t)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -49,5 +48,14 @@ public class TrainingRecordController : Controller
         await _service.DeleteAsync(id);
         return NoContent();
     }
+
+    [HttpGet("month")]
+    public async Task<IActionResult> GetByMonth([FromQuery] int year, [FromQuery] int month)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var records = await _service.GetByMonthAsync(userId,year, month);
+        return Ok(records);
+    }
+
 }
 

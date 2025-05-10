@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +28,19 @@ export class LoginComponent {
     const { username, password } = this.loginForm.value;
     if (!username || !password) return;
     this.authService.login(username, password).subscribe({
-      next: () => this.router.navigate(['/']),
-      error: () => this.loginForm.setErrors({ invalidCredentials: true })
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Login successful',
+          text: 'You have successfully logged in.',
+          showConfirmButton: false,
+          timer: 2500
+        });
+        this.router.navigate(['/'])
+      },
+      error: () =>{
+        this.loginForm.setErrors({ invalidCredentials: true })
+      } 
     });
   }
 }

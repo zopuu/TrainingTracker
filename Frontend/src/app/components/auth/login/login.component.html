@@ -7,7 +7,7 @@
           <mat-form-field appearance="fill" floatLabel="auto">
             <mat-label>Username</mat-label>
             <input matInput formControlName="username" type="text" placeholder="Username" required />
-            <mat-error *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.dirty">
+            <mat-error *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
               This field is required
             </mat-error>
             <mat-error *ngIf="loginForm.get('username')?.hasError('usernameNotFound')">
@@ -19,15 +19,15 @@
           <mat-form-field appearance="fill">
             <mat-label>Password</mat-label>
             <input matInput formControlName="password" type="password" placeholder="Password" />
-            <mat-error *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.dirty">
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
               This field is required
             </mat-error>
             <mat-error *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.dirty">
               Password must be at least 8 characters long
             </mat-error>
           </mat-form-field>
-          <mat-error *ngIf="loginForm.hasError('invalidCredentials')">
-            Invalid password.
+          <mat-error class="form-error" *ngIf="loginForm.hasError('invalidCredentials')">
+            Invalid username or password.
           </mat-error>
   
           <button (ngSubmit)="login()" type="submit" mat-raised-button class="submit-button">Login</button>

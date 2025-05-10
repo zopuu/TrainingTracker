@@ -57,6 +57,11 @@ a:hover {
   .mat-form-field-label {
     transition: all 0.3s cubic-bezier(.64, .09, .08, 1);
   }
+  .form-error{
+    align-self: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
   /************** SUBMIT BUTTON******************/
 .submit-button {
   padding: 10px 30px;
@@ -64,7 +69,7 @@ a:hover {
   font-weight: bold;
   border: none;
   border-radius: 25px;
-  color: white;
+  color: white !important;
   cursor: pointer;
   overflow: hidden;
   background: linear-gradient(270deg, #00dbde, #fc00ff, #00dbde);

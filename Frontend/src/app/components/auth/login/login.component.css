@@ -9,20 +9,20 @@ p {
 }
 
 .form-style {
-    position: absolute; /* Omogućava centriranje pomoću transformacije */
-    top: 50%; /* Postavlja vrh forme na sredinu visine prozora */
-    left: 50%; /* Postavlja levu ivicu forme na sredinu širine prozora */
+    position: absolute; 
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 
 a {
-    color: #972230; /* Boja linka */
-    text-decoration: none; /* Ukloni donju liniju */
+    color: #972230; 
+    text-decoration: none; 
     margin-left: 0px;
 }
 
 a:hover {
-    text-decoration: underline; /* Donja linija na hover */
+    text-decoration: underline; 
 }
 
 .dont-have-account {

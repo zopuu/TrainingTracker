@@ -1,76 +1,87 @@
-/* container + absolute centering */
-div {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+form{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+mat-form-field {
+  display: block;
+  margin-bottom: 16px;
+  width: 90%;
+}
+h1{
+  color: rgb(145, 145, 145);
+  font: bold;
+}
+
+mat-error {
+  font-size: 12px;
+  color: red;
+  margin-top: 4px;
+}
+mat-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.dont-have-account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+.form-error{
+  align-self: center;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/************** SUBMIT BUTTON******************/
+.submit-button {
+  width: 50%;
+  padding: 10px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  overflow: hidden;
+  background: linear-gradient(270deg, #00dbde, #fc00ff, #00dbde);
+  background-size: 200% 100%;
+  background-position: left center;
+  transition: background-position 0.6s ease;
+}
+
+.submit-button:hover {
+  animation: slideLeftToRight 0.6s forwards;
+}
+
+@keyframes slideLeftToRight {
+  0% {
+      background-position: left center;
   }
-  
-  .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    box-sizing: border-box;
+  100% {
+      background-position: right center;
   }
-  
-  .form-style {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+}
+
+.submit-button:not(:hover) {
+  animation: slideRightToLeft 0.6s forwards;
+}
+
+@keyframes slideRightToLeft {
+  0% {
+      background-position: right center;
   }
-  
-  /* links */
-  a {
-    color: #972230;
-    text-decoration: none;
+  100% {
+      background-position: left center;
   }
-  a:hover { text-decoration: underline; }
-  
-  /* text spacing */
-  p { margin-top: 20px; }
-  
-  .dont-have-account {
-    display: inline;
-    margin-top: 5px;
-  }
-  .less-visible { opacity: 70%; }
-  .sign-up { margin-left: 20px; }
-  
-  /* material field */
-  .mat-form-field { width: 100%; }
-  .mat-form-field.mat-focused .mat-form-field-label { color: #3498db; }
-  .mat-form-field-label { transition: all 0.3s cubic-bezier(.64,.09,.08,1); }
-  
-  /* submit button gradient animation */
-  .submit-button {
-    padding: 10px 30px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 25px;
-    color: #fff;
-    cursor: pointer;
-    background: linear-gradient(270deg, #00dbde, #fc00ff, #00dbde);
-    background-size: 200% 100%;
-    background-position: left center;
-    transition: background-position .6s ease;
-  }
-  .submit-button:hover   { animation: slideLeftToRight .6s forwards; }
-  .submit-button:not(:hover) { animation: slideRightToLeft .6s forwards; }
-  
-  @keyframes slideLeftToRight {
-    from { background-position: left center; }
-    to   { background-position: right center; }
-  }
-  @keyframes slideRightToLeft {
-    from { background-position: right center; }
-    to   { background-position: left center; }
-  }
-  
-  /* new: red underline for form‑level password mismatch */
-  .form-style.ng-invalid.ng-dirty .mat-form-field-password-mismatch .mat-form-field-underline {
-    background-color: #f44336;
-  }
-  
+}

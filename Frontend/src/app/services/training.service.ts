@@ -1,18 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TrainingType } from '../models/activity-data';
-
-export interface TrainingRecord {
-  trainingDateTime: string;             // ISO string
-  trainingType: TrainingType;
-  activity: string;
-  duration: number;
-  difficulty: number;
-  fatigue: number;
-  calories?: number;
-  notes?: string;
-}
+import { TrainingRecord } from '../models/training-record.model';
 
 @Injectable({ providedIn: 'root' })
 export class TrainingService {

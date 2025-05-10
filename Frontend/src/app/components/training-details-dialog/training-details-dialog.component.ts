@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TrainingRecord } from 'src/app/services/training.service';
+import { TrainingRecord } from 'src/app/models/training-record.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
-import { TrainingRecord, TrainingService } from 'src/app/services/training.service';
+import { TrainingService } from '../../services/training.service';
+import { TrainingRecord } from 'src/app/models/training-record.model';
 import { MatDialog } from '@angular/material/dialog';
 import { addMonths } from 'date-fns';
 import { TrainingDetailsDialogComponent } from '../training-details-dialog/training-details-dialog.component';

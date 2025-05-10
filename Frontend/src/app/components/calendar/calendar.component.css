@@ -1,9 +1,67 @@
 .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding: 0 1rem;
-    font-weight: bold;
-  }
-  
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.month-label {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.date-num {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.cal-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.cal-cell .mat-icon.type {
+  font-size: 40px; 
+  line-height: 1;
+  width: 100%;
+  height: auto;
+  display: block;
+  text-align: center;
+}
+
+::ng-deep mwl-calendar-month-view .cal-month-view {
+  border: 3px solid red;
+  border-radius: 12px;
+  overflow: hidden; /* for rounded corners */
+  margin-left: 5px;
+  margin-right: 5px;
+}
+/* Bigger, bolder numbers for current month days */
+::ng-deep mwl-calendar-month-view .cal-day-cell:not(.cal-out-month) .date-num {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: black;
+}
+
+/* Faded/normal style for days outside current month */
+::ng-deep mwl-calendar-month-view .cal-day-cell.cal-out-month .date-num {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #aaa;
+}

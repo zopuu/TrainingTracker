@@ -36,5 +36,6 @@ html,body{
         flex: none;
         width: 100%;
         max-width: none;
+        overflow-x: auto;
     }
 }

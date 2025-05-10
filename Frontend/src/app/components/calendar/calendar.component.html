@@ -11,10 +11,13 @@
   </ng-template>
   
   <div class="calendar-header">
-    <button mat-button (click)="prevMonth()">‹</button>
-    <span>{{ viewDate | date: 'MMMM yyyy' }}</span>
-    <button mat-button (click)="nextMonth()">›</button>
+    <div class="month-nav">
+      <button mat-icon-button (click)="prevMonth()">‹</button>
+      <span class="month-label">{{ viewDate | date: 'MMMM yyyy' }}</span>
+      <button mat-icon-button (click)="nextMonth()">›</button>
+    </div>
   </div>
+  
   <!-- the month view -->
   <mwl-calendar-month-view
     [viewDate]="viewDate"

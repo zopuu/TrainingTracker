@@ -56,9 +56,8 @@ namespace Backend.Repositories;
             AvgFatigue: Math.Round(avgFatigue, 1));
     }
 
-    public async Task<List<WeekSeriesItemDto>> GetWeekSeriesAsync(
-        int userId, int year, int month) {
-        // 1. load the month into memory
+    public async Task<List<WeekSeriesItemDto>> GetWeekSeriesAsync(int userId, int year, int month) {
+        // 1. load all records for the specified month
         var monthRecs = await _db.TrainingRecords
             .Where(r => r.UserId == userId &&
                         r.TrainingDateTime.Year == year &&
@@ -66,23 +65,27 @@ namespace Backend.Repositories;
             .ToListAsync();
 
         // 2. group by ISO week number
-        var groups = monthRecs
+        var grouped = monthRecs
             .GroupBy(r => ISOWeek.GetWeekOfYear(r.TrainingDateTime))
-            .OrderBy(g => g.Key)                 // keep natural order
+            .OrderBy(g => g.Key)
             .Select(g => new WeekSeriesItemDto(
-                WeekIndex: g.Key,              // 1‑based ISO week
-                Cardio: g.Where(r => r.TrainingType == TrainingType.Cardio).Sum(r => r.Duration),
-                Strength: g.Where(r => r.TrainingType == TrainingType.Strength).Sum(r => r.Duration),
-                Flexibility: g.Where(r => r.TrainingType == TrainingType.Flexibility).Sum(r => r.Duration),
-                Recovery: g.Where(r => r.TrainingType == TrainingType.Recovery).Sum(r => r.Duration),
-                Other: g.Where(r => r.TrainingType == TrainingType.Other).Sum(r => r.Duration)))
+                Name: $"Week {g.Key}",
+                Series: new List<NamedValueDto> {
+                    new("cardio", g.Where(r => r.TrainingType == TrainingType.Cardio).Sum(r => r.Duration)),
+                    new("strength", g.Where(r => r.TrainingType == TrainingType.Strength).Sum(r => r.Duration)),
+                    new("flexibility", g.Where(r => r.TrainingType == TrainingType.Flexibility).Sum(r => r.Duration)),
+                    new("recovery", g.Where(r => r.TrainingType == TrainingType.Recovery).Sum(r => r.Duration)),
+                    new("other", g.Where(r => r.TrainingType == TrainingType.Other).Sum(r => r.Duration))
+                }
+            ))
             .ToList();
 
-        return groups;
+        return grouped;
     }
 
 
-public async Task<WeekStatsDto> GetWeekAveragesAsync(int userId, int year, int month, int weekIndex) {
+
+    public async Task<WeekStatsDto> GetWeekAveragesAsync(int userId, int year, int month, int weekIndex) {
         var weekStart = FirstDateOfWeek(year, weekIndex);
         var weekEnd = weekStart.AddDays(7);
 

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { NgChartsModule } from 'ng2-charts';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -63,7 +64,8 @@ import { WeekSummaryCardsComponent } from './components/statistics/week-summary-
     MatIconModule,
     MatListModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

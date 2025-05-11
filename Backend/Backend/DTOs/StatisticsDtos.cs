@@ -8,12 +8,12 @@ public record MonthStatsDto(
     double AvgFatigue);
 
 public record WeekSeriesItemDto(
-    int WeekIndex,
-    int Cardio,
-    int Strength,
-    int Flexibility,
-    int Recovery,
-    int Other);
+    String Name,
+    List<NamedValueDto> Series);
+
+public record NamedValueDto(
+    string Name,
+    int Value);
 
 public record MonthStatsResultDto(
     MonthStatsDto Summary,

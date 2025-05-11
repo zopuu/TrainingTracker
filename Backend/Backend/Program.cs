@@ -5,6 +5,7 @@ using Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Backend.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -26,6 +27,8 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 
 builder.Services.AddScoped<ITrainingRecordRepository, TrainingRecordRepository>();
 builder.Services.AddScoped<ITrainingRecordService, TrainingRecordService>();
+builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
 
 builder.Services.AddCors(options => {
     options.AddPolicy("NgClient", policy =>

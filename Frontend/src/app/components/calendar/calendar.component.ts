@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { TrainingService } from '../../services/training.service';
 import { TrainingRecord } from 'src/app/models/training-record.model';
@@ -12,6 +12,8 @@ import { TrainingDetailsDialogComponent } from '../training-details-dialog/train
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
+  @Output() monthChange = new EventEmitter<{year: number, month: number}>();
+
   viewDate = new Date();
   events: CalendarEvent[] = [];
 
@@ -22,6 +24,12 @@ export class CalendarComponent implements OnInit {
     const y = this.viewDate.getFullYear();
     const m = this.viewDate.getMonth() + 1;
     this.trainingService.getMonthTrainingRecords(y, m).subscribe((records => this.events = this.toEvents(records)));
+  }
+  private emit(): void{
+    this.monthChange.emit({
+      year: this.viewDate.getFullYear(),
+      month: this.viewDate.getMonth() + 1
+    });
   }
   toEvents(records: TrainingRecord[]): CalendarEvent[] {
     return records.map(record => ({
@@ -52,9 +60,11 @@ export class CalendarComponent implements OnInit {
   nextMonth() {
     this.viewDate = addMonths(this.viewDate, 1);
     this.loadMonth();
+    this.emit();
   }
   prevMonth() {
     this.viewDate = addMonths(this.viewDate, -1);
     this.loadMonth();
+    this.emit();
   }
 }

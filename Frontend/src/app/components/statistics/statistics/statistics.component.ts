@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { TrainingService,MonthStats,WeekStats } from 'src/app/services/training.service';
 import { addMonths, startOfMonth } from 'date-fns';
 
@@ -7,7 +7,10 @@ import { addMonths, startOfMonth } from 'date-fns';
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.css']
 })
-export class StatisticsComponent implements OnInit{
+export class StatisticsComponent implements OnChanges {
+  @Input() year!: number;
+  @Input() month!: number;
+
   viewDate: Date = new Date();
 
   monthStats!: MonthStats;
@@ -18,15 +21,18 @@ export class StatisticsComponent implements OnInit{
   weekLoading = false;
 
   constructor(private trainingService: TrainingService) {}
-  ngOnInit(): void {
+  /*ngOnInit(): void {
     this.loadMonth();
-  }
+  }*/
+    ngOnChanges(changes: SimpleChanges) {
+      if (changes['year'] || changes['month']) {
+        this.loadMonth();
+      }
+    }
   loadMonth() {
     this.monthLoading = true;
-    const y = this.viewDate.getFullYear();
-    const m = this.viewDate.getMonth() + 1;
 
-    this.trainingService.getMonthStats(y, m).subscribe({
+    this.trainingService.getMonthStats(this.year, this.month).subscribe({
       next: (res) => {
         this.monthStats = res.summary;
         this.weekSeries = res.weekSeries;
@@ -40,10 +46,8 @@ export class StatisticsComponent implements OnInit{
   }
   onWeekSelect(weekIndex: number) {
     this.weekLoading = true;
-    const y = this.viewDate.getFullYear();
-    const m = this.viewDate.getMonth() + 1;
     const weekStats = this.weekSeries[weekIndex];
-    this.trainingService.getWeekStats(y, m, weekIndex).subscribe({
+    this.trainingService.getWeekStats(this.year, this.month, weekIndex).subscribe({
       next: (res) => {
         this.selectedWeekStats = res;
         this.weekLoading = false;

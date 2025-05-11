@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent {
+  year = new Date().getFullYear();
+  month = new Date().getMonth() + 1;
 
+  onMonthChange(e: { year: number; month: number }) {
+    this.year = e.year;
+    this.month = e.month;
+  }
 }

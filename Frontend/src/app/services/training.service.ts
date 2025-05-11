@@ -25,7 +25,7 @@ export interface WeekStats {
 @Injectable({ providedIn: 'root' })
 export class TrainingService {
   private readonly api = 'http://localhost:5092/api/TrainingRecord';
-  private readonly statsApi = 'http://localhost:5092/api/Statistics';
+  private readonly statsApi = 'http://localhost:5092/api/stats';
 
   constructor(private http: HttpClient) {}
 

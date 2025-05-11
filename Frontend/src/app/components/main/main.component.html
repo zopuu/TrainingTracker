@@ -1,3 +1,8 @@
 <app-navbar></app-navbar>
-<app-calendar></app-calendar>
-<app-statistics></app-statistics>
+<app-calendar
+    (monthChange)="onMonthChange($event)">
+</app-calendar>
+<app-statistics
+    [year]="year"
+    [month]="month">
+</app-statistics>

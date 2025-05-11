@@ -1,0 +1,23 @@
+<app-month-summary-cards
+    *ngIf="!monthLoading"
+    [stats]="monthStats">
+</app-month-summary-cards>
+
+<app-weekly-chart
+    *ngIf="!monthLoading"
+    [series]="weekSeries"
+    (weekSelect)="onWeekSelect($event)">
+</app-weekly-chart>
+
+<ng-container *ngIf="selectedWeekStats; else prompt">
+    <app-week-summary-cards
+        [weekStats]="selectedWeekStats"
+        *ngIf="!weekLoading">
+    </app-week-summary-cards>
+</ng-container>
+
+<ng-template #prompt>
+    <mat-card class="placeholder" *ngIf="!monthLoading">
+        Select a week in the chart to view its averages
+    </mat-card>
+</ng-template>

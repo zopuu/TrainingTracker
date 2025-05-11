@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +27,10 @@ import { RegistrationComponent } from './components/auth/registration/registrati
 import { TrainingDetailsDialogComponent } from './components/training-details-dialog/training-details-dialog.component';
 
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { StatisticsComponent } from './components/statistics/statistics/statistics.component';
+import { MonthSummaryCardsComponent } from './components/statistics/month-summary-cards/month-summary-cards.component';
+import { WeeklyChartComponent } from './components/statistics/weekly-chart/weekly-chart.component';
+import { WeekSummaryCardsComponent } from './components/statistics/week-summary-cards/week-summary-cards.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,11 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     MainComponent,
     RegistrationComponent,
     CalendarComponent,
-    TrainingDetailsDialogComponent
+    TrainingDetailsDialogComponent,
+    StatisticsComponent,
+    MonthSummaryCardsComponent,
+    WeeklyChartComponent,
+    WeekSummaryCardsComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +62,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     MatIconModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

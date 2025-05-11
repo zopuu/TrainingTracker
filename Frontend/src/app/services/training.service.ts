@@ -25,6 +25,7 @@ export interface WeekStats {
 @Injectable({ providedIn: 'root' })
 export class TrainingService {
   private readonly api = 'http://localhost:5092/api/TrainingRecord';
+  private readonly statsApi = 'http://localhost:5092/api/Statistics';
 
   constructor(private http: HttpClient) {}
 
@@ -45,7 +46,7 @@ export class TrainingService {
     return this.http.get<{
       summary: MonthStats;
       weekSeries: WeekSeriesItem[];
-    }>(`$(this.api)/month`, {
+    }>(`${this.statsApi}/month`, {
       params: { year, month },
       withCredentials: true,
     });
@@ -55,7 +56,7 @@ export class TrainingService {
     month: number,
     week: number
   ): Observable<WeekStats> {
-    return this.http.get<WeekStats>(`${this.api}/week`, {
+    return this.http.get<WeekStats>(`${this.statsApi}/week`, {
       params: { year, month, week },
       withCredentials: true
     });

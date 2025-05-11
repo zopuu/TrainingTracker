@@ -1,1 +1,43 @@
-<p>month-summary-cards works!</p>
+<div class="card-grid">
+    <!-- Total minutes -->
+    <mat-card class="metric">
+      <mat-icon fontSet="material-symbols-outlined">schedule</mat-icon>
+      <h3 mat-card-title>{{ stats.totalMinutes | number }}</h3>
+      <p  mat-card-subtitle>Total Minutes</p>
+    </mat-card>
+  
+    <!-- Total calories -->
+    <mat-card class="metric">
+      <mat-icon fontSet="material-symbols-outlined">local_fire_department</mat-icon>
+      <h3 mat-card-title>{{ stats.totalCalories | number }}</h3>
+      <p  mat-card-subtitle>Total Calories</p>
+    </mat-card>
+  
+    <!-- Favourite type -->
+    <mat-card class="metric">
+      <mat-icon matCardAvatar>
+        {{ stats.favouriteType.toLowerCase() === 'cardio'       ? 'directions_run'
+           : stats.favouriteType.toLowerCase() === 'strength'   ? 'fitness_center'
+           : stats.favouriteType.toLowerCase() === 'flexibility'? 'self_improvement'
+           : stats.favouriteType.toLowerCase() === 'recovery'   ? 'autorenew'
+           : 'push_pin' }}
+      </mat-icon>
+      <h3 mat-card-title>{{ stats.favouriteType }}</h3>
+      <p  mat-card-subtitle>Favourite Training</p>
+    </mat-card>
+  
+    <!-- Average difficulty -->
+    <mat-card class="metric">
+      <mat-icon fontSet="material-symbols-outlined">readiness_score</mat-icon>
+      <h3 mat-card-title>{{ stats.avgDifficulty | number : '1.1-1' }}/10</h3>
+      <p  mat-card-subtitle>Avg Difficulty</p>
+    </mat-card>
+  
+    <!-- Average fatigue -->
+    <mat-card class="metric">
+      <mat-icon fontSet="material-symbols-outlined">battery_alert</mat-icon>
+      <h3 mat-card-title>{{ stats.avgFatigue | number : '1.1-1' }}/10</h3>
+      <p  mat-card-subtitle>Avg Fatigue</p>
+    </mat-card>
+  </div>
+  

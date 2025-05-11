@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MonthStats } from 'src/app/services/training.service';
 
 @Component({
   selector: 'app-month-summary-cards',
   templateUrl: './month-summary-cards.component.html',
-  styleUrls: ['./month-summary-cards.component.css']
+  styleUrls: ['./month-summary-cards.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MonthSummaryCardsComponent {

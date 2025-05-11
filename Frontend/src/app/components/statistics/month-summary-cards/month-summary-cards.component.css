@@ -1,0 +1,29 @@
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  .metric {
+    text-align: center;
+    padding: 12px 8px;
+  }
+  
+  .metric mat-icon {
+    font-size: 26px;
+    margin-bottom: 4px;
+    color: #3f51b5;      /* tweak palette if desired */
+  }
+  
+  .metric h3 {
+    margin: 0;
+    font-size: 20px;
+  }
+  
+  .metric p {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  

@@ -11,7 +11,7 @@ export interface MonthStats {
   avgFatigue: number;
 }
 export interface WeekSeriesItem {
-  name: string; /* week label */
+  week: number; /* week number */
   series: { name: string; value: number }[]; /* minutes for stacked bar */
 }
 export interface WeekStats {
@@ -51,11 +51,7 @@ export class TrainingService {
       withCredentials: true,
     });
   }
-  getWeekStats(
-    year: number,
-    month: number,
-    week: number
-  ): Observable<WeekStats> {
+  getWeekStats(year: number, month: number, week: number): Observable<WeekStats> {
     return this.http.get<WeekStats>(`${this.statsApi}/week`, {
       params: { year, month, week },
       withCredentials: true

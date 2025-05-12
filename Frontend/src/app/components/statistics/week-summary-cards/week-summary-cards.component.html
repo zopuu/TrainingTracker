@@ -1,1 +1,37 @@
-<p>week-summary-cards works!</p>
+<div class="card-grid">
+    <mat-card class="metric">
+        <mat-icon fontSet="material-symbols-outlined">timer</mat-icon>
+        <div class="stat-value">{{ weekStats.totalMinutes }}</div>
+        <div class="stat-label">Total Minutes</div>
+    </mat-card>
+    <mat-card class="metric">
+        <mat-icon fontSet="material-symbols-outlined">checklist</mat-icon>
+        <h3 mat-card-title>{{weekStats.sessions | number}}</h3>
+        <p mat-card-subtitle>Training sessions</p>
+    </mat-card>
+    <mat-card class="metric">
+        <mat-icon matCardAvatar>
+            {{ weekStats.dominantType.toLowerCase() === 'cardio'       ? 'directions_run'
+               : weekStats.dominantType.toLowerCase() === 'strength'   ? 'fitness_center'
+               : weekStats.dominantType.toLowerCase() === 'flexibility'? 'self_improvement'
+               : weekStats.dominantType.toLowerCase() === 'recovery'   ? 'autorenew'
+               : 'push_pin' }}
+        </mat-icon>
+        <h3 mat-card-title>{{weekStats.dominantType}}</h3>
+        <p mat-card-subtitle>Favourite Training</p>
+    </mat-card>
+    <!-- Average difficulty -->
+    <mat-card class="metric">
+        <mat-icon fontSet="material-symbols-outlined">readiness_score</mat-icon>
+        <h3 mat-card-title>{{ weekStats.avgDifficulty | number : '1.1-1' }}/10</h3>
+        <p  mat-card-subtitle>Avg Difficulty</p>
+      </mat-card>
+    
+      <!-- Average fatigue -->
+      <mat-card class="metric">
+        <mat-icon fontSet="material-symbols-outlined">battery_alert</mat-icon>
+        <h3 mat-card-title>{{ weekStats.avgFatigue | number : '1.1-1' }}/10</h3>
+        <p  mat-card-subtitle>Avg Fatigue</p>
+      </mat-card>
+
+</div>

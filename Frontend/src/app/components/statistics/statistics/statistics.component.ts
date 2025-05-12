@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { TrainingService,MonthStats,WeekStats } from 'src/app/services/training.service';
 import { addMonths, startOfMonth } from 'date-fns';
 
@@ -20,7 +20,7 @@ export class StatisticsComponent implements OnChanges {
   monthLoading = true;
   weekLoading = false;
 
-  constructor(private trainingService: TrainingService) {}
+  constructor(private trainingService: TrainingService, private cdr: ChangeDetectorRef) {}
   /*ngOnInit(): void {
     this.loadMonth();
   }*/
@@ -44,13 +44,14 @@ export class StatisticsComponent implements OnChanges {
       }
     });
   }
-  onWeekSelect(weekIndex: number) {
+  onWeekSelect(isoWeek: number) {
     this.weekLoading = true;
-    const weekStats = this.weekSeries[weekIndex];
-    this.trainingService.getWeekStats(this.year, this.month, weekIndex).subscribe({
+    this.trainingService.getWeekStats(this.year, this.month, isoWeek).subscribe({
       next: (res) => {
-        this.selectedWeekStats = res;
+        this.selectedWeekStats = { ...res };
+        console.log("Selected week status: ",this.selectedWeekStats);
         this.weekLoading = false;
+        this.cdr.detectChanges(); // Trigger change detection
       },
       error: () => {
         this.weekLoading = false;

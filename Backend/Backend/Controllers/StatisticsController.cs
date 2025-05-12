@@ -22,10 +22,10 @@ namespace Backend.Controllers {
         }
 
         [HttpGet("week")]
-        public async Task<IActionResult> Week([FromQuery] int year, int month, int weekIndex)
+        public async Task<IActionResult> Week([FromQuery] int year, int month, int week)
         {
             int userId = User.GetUserId();
-            var result = await _service.GetWeekAsync(userId, year, month, weekIndex);
+            var result = await _service.GetWeekAsync(userId, year, month, week);
             return Ok(result);
         }
 

@@ -36,7 +36,9 @@ export class WeeklyChartComponent implements OnChanges {
     onClick: (ev: ChartEvent, elements: ActiveElement[]) => {
       if(elements.length) {
         const index = elements[0].index;
-        this.weekSelect.emit(index);
+        const week = this.series[index].week;
+        console.log("Clicked week index:", index, "=> ISO week:", week);
+        this.weekSelect.emit(week);
       }
     }
   };
@@ -46,7 +48,7 @@ export class WeeklyChartComponent implements OnChanges {
     }
   }
   private updateChart() {
-    const labels = this.series.map(w => w.name);
+    const labels = this.series.map(w => w.week.toString());
     const types = Array.from(
       new Set(this.series.flatMap(w => w.series.map(s => s.name)))
     );

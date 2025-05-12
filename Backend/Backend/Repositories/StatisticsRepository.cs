@@ -14,10 +14,12 @@ namespace Backend.Repositories;
     public class StatisticsRepository : IStatisticsRepository
     {
         private readonly AppDbContext _db;
+        private readonly ILogger<StatisticsRepository> _logger;
 
-        public StatisticsRepository(AppDbContext db)
+        public StatisticsRepository(AppDbContext db,ILogger<StatisticsRepository> logger)
         {
             _db = db;
+            _logger= logger;
         }
 
     public async Task<MonthStatsDto> GetMonthSummaryAsync(int userId, int year, int month) {
@@ -69,7 +71,7 @@ namespace Backend.Repositories;
             .GroupBy(r => ISOWeek.GetWeekOfYear(r.TrainingDateTime))
             .OrderBy(g => g.Key)
             .Select(g => new WeekSeriesItemDto(
-                Name: $"Week {g.Key}",
+                Week: g.Key,
                 Series: new List<NamedValueDto> {
                     new("cardio", g.Where(r => r.TrainingType == TrainingType.Cardio).Sum(r => r.Duration)),
                     new("strength", g.Where(r => r.TrainingType == TrainingType.Strength).Sum(r => r.Duration)),
@@ -86,13 +88,27 @@ namespace Backend.Repositories;
 
 
     public async Task<WeekStatsDto> GetWeekAveragesAsync(int userId, int year, int month, int weekIndex) {
-        var weekStart = FirstDateOfWeek(year, weekIndex);
-        var weekEnd = weekStart.AddDays(7);
+        if (weekIndex < 1 || weekIndex > 53) {
+            _logger.LogWarning("Invalid week index received: {Week}", weekIndex);
+            throw new ArgumentOutOfRangeException(nameof(weekIndex), "The week parameter must be in the range 1 through 53.");
+        }
+        var weekStartLocal = FirstDateOfWeek(year, weekIndex);
+        var weekEndLocal = weekStartLocal.AddDays(7);
+        _logger.LogInformation("Start Local: {Start}", weekStartLocal);
+        _logger.LogInformation("End Local {End}", weekEndLocal);
+
+        var weekStartUtc = DateTime.SpecifyKind(weekStartLocal, DateTimeKind.Utc);
+        var weekEndUtc = DateTime.SpecifyKind(weekEndLocal, DateTimeKind.Utc);
+
+        _logger.LogInformation("Start UTC: {Start}", weekStartUtc);
+        _logger.LogInformation("End UTC: {End}", weekEndUtc);
+
+
 
         var weekRecs = _db.TrainingRecords.Where(r =>
             r.UserId == userId &&
-            r.TrainingDateTime >= weekStart &&
-            r.TrainingDateTime < weekEnd);
+            r.TrainingDateTime >= weekStartUtc &&
+            r.TrainingDateTime < weekEndUtc);
         if (!await weekRecs.AnyAsync())
             return new WeekStatsDto(
                 TotalMinutes: 0,
@@ -120,14 +136,10 @@ namespace Backend.Repositories;
             DominantType: dominantType);
     }
 
-    /* ---------------- helper: ISO week to DateTime ---------------- */
-    private static DateTime FirstDateOfWeek(int year, int weekIso) {
-        // ISO‑8601: week starts Monday, first week has Jan‑4
-        var jan4 = new DateTime(year, 1, 4);
-        int jan4WeekDay = (int)jan4.DayOfWeek;
-        jan4WeekDay = jan4WeekDay == 0 ? 7 : jan4WeekDay; // Sunday=7
-        var firstWeekStart = jan4.AddDays(-(jan4WeekDay - 1));
-        return firstWeekStart.AddDays((weekIso - 1) * 7);
+    private static DateTime FirstDateOfWeek(int year, int isoWeek) {
+        return DateTime.SpecifyKind(ISOWeek.ToDateTime(year, isoWeek, DayOfWeek.Monday), DateTimeKind.Utc);
     }
+
+
 }
 

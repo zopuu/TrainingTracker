@@ -8,7 +8,7 @@ public record MonthStatsDto(
     double AvgFatigue);
 
 public record WeekSeriesItemDto(
-    String Name,
+    int Week,
     List<NamedValueDto> Series);
 
 public record NamedValueDto(

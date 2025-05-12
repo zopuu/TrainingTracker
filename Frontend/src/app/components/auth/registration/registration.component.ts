@@ -32,8 +32,24 @@ export class RegistrationComponent implements OnInit {
   private passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
     const pass  = group.get('password')?.value;
     const conf  = group.get('confirmPassword')?.value;
-    return pass && conf && pass !== conf ? { passwordMismatch: true } : null;
+  
+    if (pass && conf && pass !== conf) {
+      // mark the child
+      group.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else {
+      // clear mismatch error but keep any others (e.g. required/minLength)
+      const errors = group.get('confirmPassword')?.errors;
+      if (errors) {
+        delete errors['passwordMismatch'];
+        if (!Object.keys(errors).length) {
+          group.get('confirmPassword')?.setErrors(null);
+        }
+      }
+      return null;
+    }
   }
+  
   register(): void {
     if (this.registrationForm.invalid) return;
   

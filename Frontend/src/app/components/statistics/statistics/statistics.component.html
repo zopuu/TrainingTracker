@@ -13,9 +13,7 @@
       (weekSelect)="onWeekSelect($event)">
     </app-weekly-chart>
   
-    <ng-container *ngIf="weekLoading">
-      <mat-spinner></mat-spinner>
-    </ng-container>
+    
   
     <div 
       #weekCards 
@@ -33,6 +31,9 @@
       class="placeholder">
         Select a week in the chart to view its averages
     </mat-card>
+    <ng-container *ngIf="weekLoading">
+      <mat-spinner></mat-spinner>
+    </ng-container>
     </div>
   </ng-container>
   <ng-template #noMonthData>

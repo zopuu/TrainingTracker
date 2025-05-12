@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { ActiveElement, ChartData, ChartEvent, elements, plugins } from 'chart.js';
+import { ActiveElement, ChartData, ChartEvent, elements, plugins, TooltipItem,ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { WeekSeriesItem } from 'src/app/services/training.service';
 
@@ -22,16 +22,53 @@ export class WeeklyChartComponent implements OnChanges {
     maintainAspectRatio: false,
     scales: {
       x: {
-        stacked: true
+        stacked: true,
+        title: {
+          display: true,
+          text: "Weeks",
+          font: {
+            size: 16
+          }
+        }
       },
       y: {
-        stacked: true, beginAtZero: true,
+        stacked: true,
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Minutes",
+          font: {
+            size: 16
+          }
+        },
+         
       }
     },
     plugins: {
       legend: {
         position: 'top'
+      },
+      title: {
+        display: true,
+        text: 'Weekly Training Duration',
+        font: {
+          size: 20
+        }
+      },
+      tooltip: {
+        callbacks: {
+          title: (items: TooltipItem<'bar'>[]) => {
+            const weekLabel = items[0].label;
+            return `Week ${weekLabel}`;
+          },
+          label: (item: TooltipItem<'bar'>) => {
+            const datasetLabel = item.dataset.label || '';
+            const value = item.parsed.y;
+            return `${datasetLabel}: ${value} min`;
+          }
+        }
       }
+
     },
     onClick: (ev: ChartEvent, elements: ActiveElement[]) => {
       if(elements.length) {

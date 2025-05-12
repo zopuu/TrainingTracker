@@ -10,11 +10,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: rgb(0, 0, 211);
 }
 
 .month-label {
   font-size: 1.25rem;
   font-weight: bold;
+  color: rgb(0, 0, 211);
 }
 
 .date-num {

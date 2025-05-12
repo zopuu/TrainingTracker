@@ -21,4 +21,10 @@
   .main-panel{
     min-width: 0;
   }
+  h1{
+    align-self: center;
+    margin-top: 20px;
+    font-weight: bold;
+    color: rgb(0, 0, 211);
+  }
   

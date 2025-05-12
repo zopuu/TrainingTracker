@@ -1,35 +1,44 @@
-<app-month-summary-cards
-  *ngIf="!monthLoading"
-  [stats]="monthStats">
-</app-month-summary-cards>
-
-<app-weekly-chart
-  *ngIf="!monthLoading"
-  [series]="weekSeries"
-  (weekSelect)="onWeekSelect($event)">
-</app-weekly-chart>
-
-<ng-container *ngIf="weekLoading">
-  <mat-spinner></mat-spinner>
+<ng-container *ngIf="!monthLoading">
+  <h1>Month statistics</h1>
+  <ng-container *ngIf="(monthStats?.totalMinutes ?? 0) > 0; else noMonthData">
+    
+    <app-month-summary-cards
+      *ngIf="!monthLoading"
+      [stats]="monthStats">
+    </app-month-summary-cards>
+  
+    <app-weekly-chart
+      *ngIf="!monthLoading"
+      [series]="weekSeries"
+      (weekSelect)="onWeekSelect($event)">
+    </app-weekly-chart>
+  
+    <ng-container *ngIf="weekLoading">
+      <mat-spinner></mat-spinner>
+    </ng-container>
+  
+    <div 
+      #weekCards 
+      *ngIf="!weekLoading"
+      inViewport
+      (visible)="onSectionVisible()"
+      [class.visible]="sectionVisible">    
+    <app-week-summary-cards
+      *ngIf="selectedWeekStats"
+      [weekStats]="selectedWeekStats">
+    </app-week-summary-cards>
+  
+    <mat-card
+      *ngIf="!selectedWeekStats"
+      class="placeholder">
+        Select a week in the chart to view its averages
+    </mat-card>
+    </div>
+  </ng-container>
+  <ng-template #noMonthData>
+    <mat-card class="placeholder">
+      No data for the selected month
+    </mat-card>
+  </ng-template>
 </ng-container>
 
-
-<div 
-    #weekCards 
-    *ngIf="!weekLoading"
-    inViewport
-    (visible)="onSectionVisible()"
-    [class.visible]="sectionVisible">    
-  <app-week-summary-cards
-    
-    *ngIf="selectedWeekStats"
-    [weekStats]="selectedWeekStats">
-    
-  </app-week-summary-cards>
-  
-  <mat-card
-    *ngIf="!selectedWeekStats"
-    class="placeholder">
-    Select a week in the chart to view its averages
-  </mat-card>
-</div>

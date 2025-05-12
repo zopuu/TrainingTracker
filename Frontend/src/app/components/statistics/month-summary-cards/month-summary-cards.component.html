@@ -5,12 +5,17 @@
       <h3 mat-card-title>{{ stats.totalMinutes | number }}</h3>
       <p  mat-card-subtitle>Total Minutes</p>
     </mat-card>
+    <mat-card class="metric">
+      <mat-icon fontSet="material-symbols-outlined">checklist</mat-icon>
+      <h3 mat-card-title>{{ stats.sessions | number}}</h3>
+      <p mat-card-subtitle>Training sessions</p>
+  </mat-card>
   
     <!-- Total calories -->
     <mat-card class="metric">
       <mat-icon fontSet="material-symbols-outlined">local_fire_department</mat-icon>
       <h3 mat-card-title>{{ stats.totalCalories | number }}</h3>
-      <p  mat-card-subtitle>Total Calories</p>
+      <p  mat-card-subtitle>Calories Burned</p>
     </mat-card>
   
     <!-- Favourite type -->

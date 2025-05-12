@@ -30,6 +30,7 @@ namespace Backend.Repositories;
         if (!await query.AnyAsync()) {
             return new MonthStatsDto(
                 TotalMinutes: 0,
+                Sessions: 0,
                 TotalCalories: 0,
                 FavouriteType: "N/A",
                 AvgDifficulty: 0,
@@ -38,6 +39,7 @@ namespace Backend.Repositories;
         }
 
         var totalMinutes = await query.SumAsync(r => r.Duration);
+        var sessions = await query.CountAsync();
         var totalCalories = await query.SumAsync(r => r.Calories);
         var avgDifficulty = await query.AverageAsync(r => r.Difficulty);
         var avgFatigue = await query.AverageAsync(r => r.Fatigue);
@@ -52,6 +54,7 @@ namespace Backend.Repositories;
 
         return new MonthStatsDto(
             TotalMinutes: totalMinutes,
+            Sessions: sessions,
             TotalCalories: totalCalories,
             FavouriteType: favouriteType,
             AvgDifficulty: Math.Round(avgDifficulty, 1),
@@ -113,6 +116,7 @@ namespace Backend.Repositories;
             return new WeekStatsDto(
                 TotalMinutes: 0,
                 Sessions: 0,
+                TotalCalories: 0,
                 AvgDifficulty: 0,
                 AvgFatigue: 0,
                 DominantType: "N/A"
@@ -120,6 +124,7 @@ namespace Backend.Repositories;
 
         var totalMinutes = await weekRecs.SumAsync(r => r.Duration);
         var sessions = await weekRecs.CountAsync();
+        var totalCalories = await weekRecs.SumAsync(r => r.Calories);
         var avgDifficulty = await weekRecs.AverageAsync(r => r.Difficulty);
         var avgFatigue = await weekRecs.AverageAsync(r => r.Fatigue);
 
@@ -131,6 +136,7 @@ namespace Backend.Repositories;
         return new WeekStatsDto(
             TotalMinutes: totalMinutes,
             Sessions: sessions,
+            TotalCalories: totalCalories,
             AvgDifficulty: Math.Round(avgDifficulty, 1),
             AvgFatigue: Math.Round(avgFatigue, 1),
             DominantType: dominantType);

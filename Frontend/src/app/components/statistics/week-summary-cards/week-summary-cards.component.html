@@ -10,6 +10,11 @@
         <p mat-card-subtitle>Training sessions</p>
     </mat-card>
     <mat-card class="metric">
+        <mat-icon fontSet="material-symbols-outlined">local_fire_department</mat-icon>
+        <h3 mat-card-title>{{ weekStats.totalCalories | number }}</h3>
+        <p  mat-card-subtitle>Calories Burned</p>
+      </mat-card>
+    <mat-card class="metric">
         <mat-icon matCardAvatar>
             {{ weekStats.dominantType.toLowerCase() === 'cardio'       ? 'directions_run'
                : weekStats.dominantType.toLowerCase() === 'strength'   ? 'fitness_center'

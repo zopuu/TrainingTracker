@@ -5,6 +5,7 @@ import { TrainingRecord } from '../models/training-record.model';
 
 export interface MonthStats {
   totalMinutes: number;
+  sessions: number;
   totalCalories: number;
   favouriteType: string;
   avgDifficulty: number;
@@ -17,6 +18,7 @@ export interface WeekSeriesItem {
 export interface WeekStats {
   totalMinutes: number;
   sessions: number;
+  totalCalories: number;
   avgDifficulty: number;
   avgFatigue: number;
   dominantType: string;

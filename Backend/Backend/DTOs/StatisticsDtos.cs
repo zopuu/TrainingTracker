@@ -2,6 +2,7 @@
 
 public record MonthStatsDto(
     int TotalMinutes,
+    int Sessions,
     int TotalCalories,
     string FavouriteType,
     double AvgDifficulty,
@@ -22,6 +23,7 @@ public record MonthStatsResultDto(
 public record WeekStatsDto(
     int TotalMinutes,
     int Sessions,
+    int TotalCalories,
     double AvgDifficulty,
     double AvgFatigue,
     string DominantType);

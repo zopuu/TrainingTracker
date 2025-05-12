@@ -46,7 +46,7 @@
 }
 
 ::ng-deep mwl-calendar-month-view .cal-month-view {
-  border: 3px solid red;
+  border: 3px solid rgb(0, 102, 255);
   border-radius: 12px;
   overflow: hidden; /* for rounded corners */
   margin-left: 5px;

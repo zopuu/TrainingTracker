@@ -1,14 +1,15 @@
 .container{
     display: flex;
-    height: calc(100vh - 50px);
+    height: 100vh;
     margin: 0;
     justify-content: center;
+    width: 100%;
 }
 .side-panel {
     flex: 1;
     min-width: 100px;
-    max-width: 250px;
-    background-color:darkgrey 
+    max-width: 350px;
+    background-color:white; 
 }
 .main-panel {
     flex: 2;
@@ -16,7 +17,13 @@
     min-width: 300px;
     max-width: 900px;
     overflow-y: auto;
-    background-color:aqua;
+    overflow-x: hidden;
+    background-color:#e6e4e4;
+    margin: 0;
+    box-shadow:
+        -10px 0 10px -5px darkblue,
+        30px 0 30px -5px rgb(139, 0, 0);
+
 }
 html,body{
     margin: 0;

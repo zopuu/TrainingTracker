@@ -109,8 +109,13 @@ a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; 
+  max-height: 100vh; 
   box-sizing: border-box;
+  overflow-y: hidden;
 }
-
+h2{
+  text-align: center;
+  color: blue;
+  font-weight: bolder;
+}
 

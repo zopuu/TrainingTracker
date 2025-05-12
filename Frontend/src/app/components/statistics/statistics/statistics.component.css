@@ -10,11 +10,15 @@
     padding: 24px;
     font-style: italic;
     color: #666;
+    border-radius: 6px;
   }
   
   .nav-buttons {
     display: flex;
     justify-content: center;
     gap: 8px;
+  }
+  .main-panel{
+    min-width: 0;
   }
   

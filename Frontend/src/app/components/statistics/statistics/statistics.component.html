@@ -14,8 +14,14 @@
 </ng-container>
 
 
-<ng-container *ngIf="!weekLoading">    
+<div 
+    #weekCards 
+    *ngIf="!weekLoading"
+    inViewport
+    (visible)="onSectionVisible()"
+    [class.visible]="sectionVisible">    
   <app-week-summary-cards
+    
     *ngIf="selectedWeekStats"
     [weekStats]="selectedWeekStats">
     
@@ -26,4 +32,4 @@
     class="placeholder">
     Select a week in the chart to view its averages
   </mat-card>
-</ng-container>
+</div>

@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { NgChartsModule } from 'ng2-charts';
 import { CountUpModule } from 'ngx-countup';
+import { InViewportDirective } from './shared/in-viewport.directive';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -50,6 +51,7 @@ import { WeekSummaryCardsComponent } from './components/statistics/week-summary-
     MonthSummaryCardsComponent,
     WeeklyChartComponent,
     WeekSummaryCardsComponent,
+    InViewportDirective
   ],
   imports: [
     BrowserModule,
@@ -72,6 +74,7 @@ import { WeekSummaryCardsComponent } from './components/statistics/week-summary-
     CountUpModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [InViewportDirective],
 })
 export class AppModule { }

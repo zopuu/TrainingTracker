@@ -7,6 +7,15 @@
     margin: 20px auto;
     justify-content: center;
     max-width: calc(4 * 160px + 3 * 16px); /* 4 cards with 3 gaps */
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 400ms ease-out,
+                transform 400ms ease-out;
+  }
+  .card-grid.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
   
   .metric {

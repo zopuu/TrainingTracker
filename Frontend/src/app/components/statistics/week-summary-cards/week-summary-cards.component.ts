@@ -9,7 +9,12 @@ import { WeekStats } from 'src/app/services/training.service';
 export class WeekSummaryCardsComponent implements OnChanges {
   @Input() weekStats!: WeekStats;
 
+  sectionVisible = false;
+
   ngOnChanges(changes: SimpleChanges): void {
     console.log('weekStats changed:', changes['weekStats'].currentValue);
+  }
+  onSectionVisible() {
+    this.sectionVisible = true;
   }
 }

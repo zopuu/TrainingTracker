@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { TrainingService,MonthStats,WeekStats } from 'src/app/services/training.service';
 import { addMonths, startOfMonth } from 'date-fns';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-statistics',
@@ -10,6 +11,7 @@ import { addMonths, startOfMonth } from 'date-fns';
 export class StatisticsComponent implements OnChanges {
   @Input() year!: number;
   @Input() month!: number;
+  @ViewChild('weekCards') weekCards!: ElementRef<HTMLElement>;
 
   viewDate: Date = new Date();
 
@@ -19,8 +21,10 @@ export class StatisticsComponent implements OnChanges {
 
   monthLoading = true;
   weekLoading = false;
+  sectionVisible = false;
 
-  constructor(private trainingService: TrainingService, private cdr: ChangeDetectorRef) {}
+
+  constructor(private trainingService: TrainingService, private cdr: ChangeDetectorRef, private scroller: ViewportScroller) {}
   /*ngOnInit(): void {
     this.loadMonth();
   }*/
@@ -52,10 +56,14 @@ export class StatisticsComponent implements OnChanges {
         console.log("Selected week status: ",this.selectedWeekStats);
         this.weekLoading = false;
         this.cdr.detectChanges(); // Trigger change detection
+        this.weekCards.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
       },
       error: () => {
         this.weekLoading = false;
       }
     });
+  }
+  onSectionVisible() {
+    this.sectionVisible = true;
   }
 }

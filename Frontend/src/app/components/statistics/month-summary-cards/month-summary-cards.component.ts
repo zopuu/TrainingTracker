@@ -10,4 +10,10 @@ import { MonthStats } from 'src/app/services/training.service';
 
 export class MonthSummaryCardsComponent {
   @Input() stats!: MonthStats;
+  
+  sectionVisible = false;
+
+  onSectionVisible() {
+    this.sectionVisible = true;
+  }
 }

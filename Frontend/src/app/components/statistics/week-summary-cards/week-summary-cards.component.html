@@ -1,9 +1,9 @@
-<div class="card-grid">
+<div class="card-grid" inViewport (visible)="onSectionVisible()" [class.visible]="sectionVisible">
     <mat-card class="metric">
         <mat-icon fontSet="material-symbols-outlined">timer</mat-icon>
         <h3 mat-card-title>
             <div
-            [countUp]="weekStats.totalMinutes">0</div>
+            [countUp]="sectionVisible ? weekStats.totalMinutes : 0">0</div>
         </h3>
         <p mat-card-subtitle>Total Minutes</p>
     </mat-card>
@@ -11,7 +11,7 @@
         <mat-icon fontSet="material-symbols-outlined">checklist</mat-icon>
         <h3 mat-card-title>
             <div
-            [countUp]="weekStats.sessions">0</div>
+            [countUp]="sectionVisible ? weekStats.sessions : 0">0</div>
         </h3>
         <p mat-card-subtitle>Training sessions</p>
     </mat-card>
@@ -19,7 +19,7 @@
         <mat-icon fontSet="material-symbols-outlined">local_fire_department</mat-icon>
         <h3 mat-card-title>
             <div
-            [countUp]="weekStats.totalCalories">0</div>
+            [countUp]="sectionVisible ? weekStats.totalCalories : 0">0</div>
         </h3>
         <p  mat-card-subtitle>Calories Burned</p>
       </mat-card>
@@ -39,10 +39,11 @@
         <mat-icon fontSet="material-symbols-outlined">readiness_score</mat-icon>
         <h3 mat-card-title>
             <div
-            [countUp]="weekStats.avgDifficulty"
+            [countUp]="sectionVisible ? weekStats.avgDifficulty : 0"
             [options]="{
                 suffix: '/10',
                 decimalPlaces: 1,
+                duration: 2,
             }">0</div>
         </h3>
         <p  mat-card-subtitle>Avg Difficulty</p>
@@ -53,10 +54,11 @@
         <mat-icon fontSet="material-symbols-outlined">battery_alert</mat-icon>
         <h3 mat-card-title>
             <div
-            [countUp]="weekStats.avgFatigue"
+            [countUp]="sectionVisible ? weekStats.avgFatigue : 0"
             [options]="{
                 suffix: '/10',
                 decimalPlaces: 1,
+                duration: 2,
             }">0</div>
         </h3>
         <p  mat-card-subtitle>Avg Fatigue</p>

@@ -1,17 +1,26 @@
 <div class="card-grid">
     <mat-card class="metric">
         <mat-icon fontSet="material-symbols-outlined">timer</mat-icon>
-        <div class="stat-value">{{ weekStats.totalMinutes }}</div>
-        <div class="stat-label">Total Minutes</div>
+        <h3 mat-card-title>
+            <div
+            [countUp]="weekStats.totalMinutes">0</div>
+        </h3>
+        <p mat-card-subtitle>Total Minutes</p>
     </mat-card>
     <mat-card class="metric">
         <mat-icon fontSet="material-symbols-outlined">checklist</mat-icon>
-        <h3 mat-card-title>{{weekStats.sessions | number}}</h3>
+        <h3 mat-card-title>
+            <div
+            [countUp]="weekStats.sessions">0</div>
+        </h3>
         <p mat-card-subtitle>Training sessions</p>
     </mat-card>
     <mat-card class="metric">
         <mat-icon fontSet="material-symbols-outlined">local_fire_department</mat-icon>
-        <h3 mat-card-title>{{ weekStats.totalCalories | number }}</h3>
+        <h3 mat-card-title>
+            <div
+            [countUp]="weekStats.totalCalories">0</div>
+        </h3>
         <p  mat-card-subtitle>Calories Burned</p>
       </mat-card>
     <mat-card class="metric">
@@ -28,14 +37,28 @@
     <!-- Average difficulty -->
     <mat-card class="metric">
         <mat-icon fontSet="material-symbols-outlined">readiness_score</mat-icon>
-        <h3 mat-card-title>{{ weekStats.avgDifficulty | number : '1.1-1' }}/10</h3>
+        <h3 mat-card-title>
+            <div
+            [countUp]="weekStats.avgDifficulty"
+            [options]="{
+                suffix: '/10',
+                decimalPlaces: 1,
+            }">0</div>
+        </h3>
         <p  mat-card-subtitle>Avg Difficulty</p>
       </mat-card>
     
       <!-- Average fatigue -->
       <mat-card class="metric">
         <mat-icon fontSet="material-symbols-outlined">battery_alert</mat-icon>
-        <h3 mat-card-title>{{ weekStats.avgFatigue | number : '1.1-1' }}/10</h3>
+        <h3 mat-card-title>
+            <div
+            [countUp]="weekStats.avgFatigue"
+            [options]="{
+                suffix: '/10',
+                decimalPlaces: 1,
+            }">0</div>
+        </h3>
         <p  mat-card-subtitle>Avg Fatigue</p>
       </mat-card>
 

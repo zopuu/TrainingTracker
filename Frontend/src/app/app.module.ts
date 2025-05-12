@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { NgChartsModule } from 'ng2-charts';
+import { CountUpModule } from 'ngx-countup';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -48,7 +49,7 @@ import { WeekSummaryCardsComponent } from './components/statistics/week-summary-
     StatisticsComponent,
     MonthSummaryCardsComponent,
     WeeklyChartComponent,
-    WeekSummaryCardsComponent
+    WeekSummaryCardsComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +68,8 @@ import { WeekSummaryCardsComponent } from './components/statistics/week-summary-
     MatDividerModule,
     MatCardModule,
     NgChartsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    CountUpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,24 +1,39 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { TrainingService } from '../../services/training.service';
 import { TrainingRecord } from 'src/app/models/training-record.model';
 import { MatDialog } from '@angular/material/dialog';
 import { addMonths } from 'date-fns';
 import { TrainingDetailsDialogComponent } from '../training-details-dialog/training-details-dialog.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
   @Output() monthChange = new EventEmitter<{year: number, month: number}>();
+
+  private destroy$ = new Subject<void>();
 
   viewDate = new Date();
   events: CalendarEvent[] = [];
 
-  constructor(private trainingService: TrainingService, private dialog: MatDialog) { }
-  ngOnInit() { this.loadMonth(); }
+  constructor(private trainingService: TrainingService, private dialog: MatDialog, private cdr: ChangeDetectorRef) { }
+  ngOnInit() { 
+    this.loadMonth();
+    this.trainingService.recordCreated$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.loadMonth();
+        this.cdr.markForCheck();
+      });
+   }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   loadMonth() {
     const y = this.viewDate.getFullYear();

@@ -2,16 +2,19 @@ import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, Sim
 import { TrainingService,MonthStats,WeekStats } from 'src/app/services/training.service';
 import { addMonths, startOfMonth } from 'date-fns';
 import { ViewportScroller } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.css']
 })
-export class StatisticsComponent implements OnChanges {
+export class StatisticsComponent implements OnChanges,OnInit {
   @Input() year!: number;
   @Input() month!: number;
   @ViewChild('weekCards') weekCards!: ElementRef<HTMLElement>;
+
+  destroy$ = new Subject<void>();
 
   viewDate: Date = new Date();
 
@@ -25,9 +28,17 @@ export class StatisticsComponent implements OnChanges {
 
 
   constructor(private trainingService: TrainingService, private cdr: ChangeDetectorRef, private scroller: ViewportScroller) {}
-  /*ngOnInit(): void {
+  ngOnInit(): void {
     this.loadMonth();
-  }*/
+    this.trainingService.recordCreated$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.loadMonth();
+        this.cdr.markForCheck();
+      }
+    );
+  }
+
     ngOnChanges(changes: SimpleChanges) {
       if (changes['year'] || changes['month']) {
         this.loadMonth();

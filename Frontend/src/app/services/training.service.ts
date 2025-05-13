@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { TrainingRecord } from '../models/training-record.model';
 
 export interface MonthStats {
@@ -29,10 +29,15 @@ export class TrainingService {
   private readonly api = 'http://localhost:5092/api/TrainingRecord';
   private readonly statsApi = 'http://localhost:5092/api/stats';
 
+  recordCreated$ = new Subject<void>();
+
   constructor(private http: HttpClient) {}
 
   create(record: TrainingRecord): Observable<TrainingRecord> {
-    return this.http.post<TrainingRecord>(this.api, record, {withCredentials: true});
+    return this.http.post<TrainingRecord>(this.api, record, {withCredentials: true})
+      .pipe(
+        tap(() => this.recordCreated$.next())
+      );
   }
 
   getAll(): Observable<TrainingRecord[]> {

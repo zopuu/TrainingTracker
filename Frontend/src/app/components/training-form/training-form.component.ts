@@ -90,7 +90,6 @@ export class TrainingFormComponent implements OnDestroy {
           text: 'Check your input and try again',
           confirmButtonText: 'Ok'
         });
-         // Log the error to the console
         console.error(err)
       }
     });

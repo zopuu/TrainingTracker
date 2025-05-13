@@ -63,7 +63,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       flexibility: 'self_improvement',
       recovery: 'healing',
 
-    } as any)[type.toLowerCase()] ?? 'push_pin';
+    } as any)[type.toLowerCase()] ?? 'help_outline';
   }
   openDetails(day: CalendarMonthViewDay) {
     if(!day.events.length) return;

@@ -1,21 +1,31 @@
 .dialog-body {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: 16px;               
   }
   
   .record {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 8px;
   }
   
   .type {
-    font-size: 36px;
+    font-size: 48px;
+    line-height: 1;
     align-self: center;
-    margin-bottom: 4px;
+    margin-bottom: 10px;
+    overflow: visible;
   }
   
   .row {
     font-size: 14px;
+    width: 100%;
+    text-align: center;
+  }
+  .mat-dialog-container {
+    overflow: visible !important;
   }

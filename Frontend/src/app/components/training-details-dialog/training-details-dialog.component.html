@@ -20,7 +20,7 @@
           <strong>Fatigue:</strong> {{ rec.fatigue }}/10
         </div>
         <div class="row" *ngIf="rec.calories">
-          <strong>Calories:</strong> {{ rec.calories }}
+          <strong>Calories:</strong> {{ rec.calories }} kcal
         </div>
         <div class="row" *ngIf="rec.notes">
           <strong>Notes:</strong> <i>{{ rec.notes }}</i>
@@ -31,7 +31,7 @@
     </ng-container>
   </mat-dialog-content>
   
-  <mat-dialog-actions>
+  <mat-dialog-actions align="center">
     <button mat-button (click)="close()">Close</button>
   </mat-dialog-actions>
   

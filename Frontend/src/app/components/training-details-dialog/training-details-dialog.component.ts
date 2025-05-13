@@ -17,7 +17,7 @@ export class TrainingDetailsDialogComponent {
       case 'strength': return 'fitness_center';
       case 'flexibility': return 'accessibility_new';
       case 'recovery': return 'self_improvement';
-      default: return 'event_note';
+      default: return 'help_outline';
     }
   }
 

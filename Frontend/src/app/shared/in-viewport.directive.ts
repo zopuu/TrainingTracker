@@ -24,7 +24,7 @@ import {
             }
           }
         },
-        { threshold: 0.3 }  // 30% visible
+        { threshold: 0.3 }
       );
       this.observer.observe(this.el.nativeElement);
     }

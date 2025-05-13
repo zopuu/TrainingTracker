@@ -12,14 +12,9 @@
       [series]="weekSeries"
       (weekSelect)="onWeekSelect($event)">
     </app-weekly-chart>
-  
-    
-  
     <div 
       #weekCards 
       *ngIf="!weekLoading"
-      inViewport
-      (visible)="onSectionVisible()"
       [class.visible]="sectionVisible">    
     <app-week-summary-cards
       *ngIf="selectedWeekStats"

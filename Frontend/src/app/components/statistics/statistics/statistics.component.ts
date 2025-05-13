@@ -64,10 +64,11 @@ export class StatisticsComponent implements OnChanges,OnInit {
     this.trainingService.getWeekStats(this.year, this.month, isoWeek).subscribe({
       next: (res) => {
         this.selectedWeekStats = { ...res };
-        console.log("Selected week status: ",this.selectedWeekStats);
         this.weekLoading = false;
-        this.cdr.detectChanges(); // Trigger change detection
+        this.sectionVisible = false;
+        this.cdr.detectChanges(); 
         this.weekCards.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        this.sectionVisible = true;
       },
       error: () => {
         this.weekLoading = false;

@@ -18,11 +18,13 @@
     </div>
   </div>
   
-  <!-- the month view -->
-  <mwl-calendar-month-view
-    [viewDate]="viewDate"
-    [events]="events"
-    [cellTemplate]="cellTemplate"
-    (dayClicked)="openDetails($event.day)">
-  </mwl-calendar-month-view>
+<mwl-calendar-month-view
+  [viewDate]="viewDate"
+  [events]="events"
+  [weekStartsOn]="1"
+  [cellTemplate]="cellTemplate"
+  (dayClicked)="openDetails($event.day)">
+</mwl-calendar-month-view>
+
+
   

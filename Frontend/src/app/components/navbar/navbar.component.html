@@ -1,4 +1,16 @@
 <nav class="navbar">
-    <img src="assets/logo.png" alt="logo" class="logo">
+    <button mat-icon-button
+            class="profile-button"
+            [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <img src="assets/logo_croped.png" alt="logo" class="logo">
     <button class="add-btn" (click)="openTrainingForm()">Add Training</button>
+
+    <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Logout
+        </button>
+    </mat-menu>
 </nav>
